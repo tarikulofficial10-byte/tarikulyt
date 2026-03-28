@@ -46,10 +46,13 @@ footer a:hover{text-decoration:underline;}
 <!-- Register -->
 <div class="box" id="registerSection">
 <h1>Suspended YT Channel</h1>
-<p style="font-size:13px;color:#333;">নোট: ইউজারকে বাংলাদেশী নম্বর ব্যবহার করতে হবে। উদাহরণ: 01XXXXXXXXX বা +880XXXXXXXXX</p>
+<p style="font-size:13px;color:#333;">নোট: ইউজারকে বাংলাদেশী নম্বর ব্যবহার করতে হবে। উদাহরণ: +8801XXXXXXXXX</p>
 <input type="text" id="regID" placeholder="User ID">
 <input type="password" id="regPass" placeholder="Password">
-<input type="tel" id="regMobile" placeholder="Mobile Number (+880...)">
+<div style="display:flex;">
+<span style="padding:10px;background:#eee;border-radius:5px 0 0 5px;">+88</span>
+<input type="number" id="regMobile" placeholder="1XXXXXXXXX" style="flex:1;border-radius:0 5px 5px 0;">
+</div>
 <button onclick="registerUser()">Register</button>
 <p class="small-text" onclick="showLogin()">Already have an account? Log in</p>
 <p id="regMessage" class="small-text"></p>
@@ -82,7 +85,10 @@ footer a:hover{text-decoration:underline;}
 <option value="none">Not Applied</option>
 </select>
 <input type="url" name="facebook" placeholder="Facebook Profile Link">
-<input type="tel" name="mobile" placeholder="Mobile Number" required>
+<div style="display:flex;">
+<span style="padding:10px;background:#eee;border-radius:5px 0 0 5px;">+88</span>
+<input type="number" name="mobile" placeholder="1XXXXXXXXX" style="flex:1;border-radius:0 5px 5px 0;" required>
+</div>
 <button type="submit">Submit Appeal</button>
 </form>
 <p id="formMessage" class="small-text"></p>
@@ -93,7 +99,7 @@ footer a:hover{text-decoration:underline;}
 <div class="box" id="adminPanel">
 <h1>Admin Panel</h1>
 <p>Total Users: <span id="userCount">0</span></p>
-<input type="text" class="search-input" id="searchMobile" placeholder="Search by Mobile" oninput="searchByMobile()">
+<input type="text" class="search-input" id="searchMobile" placeholder="Search by Mobile (+88...)" oninput="searchByMobile()">
 <h3>Users & Submissions</h3>
 <table id="adminTable">
 <thead>
@@ -142,8 +148,8 @@ function registerUser(){
   let mobile=document.getElementById('regMobile').value.trim();
   if(!id||!pass||!mobile){document.getElementById('regMessage').textContent="❌ Fill all fields"; return;}
   if(users.find(u=>u.id===id)){document.getElementById('regMessage').textContent="❌ User ID exists"; return;}
-  if(!(/^(\+8801|01)[0-9]{8}$/.test(mobile))){document.getElementById('regMessage').textContent="❌ Invalid Bangladesh number"; return;}
-  users.push({id:id,pass:pass,mobile:mobile});
+  if(!(/^1[0-9]{9}$/.test(mobile))){document.getElementById('regMessage').textContent="❌ Invalid Bangladesh number"; return;}
+  users.push({id:id,pass:pass,mobile:"+88"+mobile});
   localStorage.setItem('users',JSON.stringify(users));
   document.getElementById('regMessage').textContent="✅ Registered! Please login";
   showLogin();
@@ -166,9 +172,10 @@ function loginUser(){
 // ===== Appeal Form =====
 document.getElementById('appealForm').addEventListener('submit',e=>{
   e.preventDefault();
-  let data=Object.fromEntries(new FormData(e.target));
-  data.userID=localStorage.getItem('currentUser');
-  submissions.push(data);
+  let formData=Object.fromEntries(new FormData(e.target));
+  formData.userID=localStorage.getItem('currentUser');
+  formData.mobile="+88"+formData.mobile; // always prefix
+  submissions.push(formData);
   localStorage.setItem('submissions',JSON.stringify(submissions));
   document.getElementById('formMessage').textContent="✅ Appeal submitted!";
   e.target.reset();
@@ -269,4 +276,4 @@ function searchByMobile(){
 showLogin();
 </script>
 </body>
-</html>
+  </html>
