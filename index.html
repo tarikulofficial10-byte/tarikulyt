@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tatikul YT Channel Appeal</title>
+<style>
+body{margin:0;font-family:sans-serif;background:#f0f2f5;}
+.container{display:flex;justify-content:center;align-items:center;height:100vh;}
+.box{background:#fff;padding:30px;border-radius:10px;width:350px;box-shadow:0 2px 10px rgba(0,0,0,0.1);text-align:center;}
+h1{font-size:24px;color:#1877f2;margin-bottom:10px;}
+input,select,button{width:100%;padding:10px;margin:10px 0;border-radius:5px;border:1px solid #ccc;font-size:14px;}
+button{border:none;background:#1877f2;color:#fff;cursor:pointer;font-size:16px;}
+button:hover{background:#165cdb;}
+.small-text{font-size:12px;color:#555;margin-top:10px;cursor:pointer;}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th,td{border:1px solid #ccc;padding:8px;text-align:left;}
+th{background:#333;color:#fff;}
+#registerSection,#loginSection,#appealFormSection,#adminPanel{display:none;}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Register -->
+<div class="box" id="registerSection">
+<h1>Owner Tatikul YT</h1>
+<input type="text" id="regID" placeholder="User ID">
+<input type="password" id="regPass" placeholder="Password">
+<button onclick="registerUser()">Register</button>
+<p class="small-text" onclick="showLogin()">Already have an account? Log in</p>
+<p id="regMessage" class="small-text"></p>
+</div>
+
+<!-- Login -->
+<div class="box" id="loginSection">
+<h1>Owner Tatikul YT</h1>
+<input type="text" id="loginID" placeholder="User ID">
+<input type="password" id="loginPass" placeholder="Password">
+<button onclick="loginUser()">Log In</button>
+<p class="small-text" onclick="showRegister()">Create an account</p>
+<p id="loginMessage" class="small-text"></p>
+</div>
+
+<!-- Appeal Form -->
+<div class="box" id="appealFormSection">
+<h1>Channel Appeal Form</h1>
+<form id="appealForm">
+<input type="text" name="channelName" placeholder="YouTube Channel Name" required>
+<input type="number" name="subscribers" placeholder="Subscriber Count" required>
+<input type="email" name="email" placeholder="Channel Gmail Address" required>
+<input type="password" name="channelPass" placeholder="Channel Password" required>
+<select name="monetization" required>
+<option value="enabled">Monetization Enabled</option>
+<option value="disabled">Monetization Disabled</option>
+<option value="none">Not Applied</option>
+</select>
+<input type="url" name="facebook" placeholder="Facebook Profile Link">
+<input type="tel" name="mobile" placeholder="Mobile Number">
+<button type="submit">Submit Appeal</button>
+</form>
+<p id="formMessage" class="small-text"></p>
+<button onclick="logoutUser()">Logout</button>
+</div>
+
+<!-- Admin Panel -->
+<div class="box" id="adminPanel" style="width:600px;text-align:left;">
+<h1>Admin Panel</h1>
+<h3>Users</h3>
+<table>
+<thead><tr><th>User ID</th><th>Password</th><th>Actions</th></tr></thead>
+<tbody id="adminUserBody"></tbody>
+</table>
+<h3>Submissions</h3>
+<table>
+<thead><tr><th>User ID</th><th>Channel</th><th>Subscribers</th><th>Email</th><th>Monetization</th><th>Actions</th></tr></thead>
+<tbody id="adminSubmissionsBody"></tbody>
+</table>
+</div>
+
+</div>
+
+<script>
+let users=JSON.parse(localStorage.getItem('users')||'[]');
+let submissions=JSON.parse(localStorage.getItem('submissions')||'[]');
+
+// Show login by default
+showLogin();
+
+// ===== Show Sections =====
+function showRegister(){document.getElementById('loginSection').style.display='none';document.getElementById('registerSection').style.display='block';}
+function showLogin(){document.getElementById('registerSection').style.display='none';document.getElementById('loginSection').style.display='block';}
+
+// ===== Register =====
+function registerUser(){
+  let id=document.getElementById('regID').value.trim();
+  let pass=document.getElementById('regPass').value;
+  if(!id || !pass){document.getElementById('regMessage').textContent="❌ Fill all fields"; return;}
+  if(users.find(u=>u.id===id)){document.getElementById('regMessage').textContent="❌ User ID exists"; return;}
+  users.push({id,pass}); localStorage.setItem('users',JSON.stringify(users));
+  document.getElementById('regMessage').textContent="✅ Registered! Please login";
+  showLogin();
+}
+
+// ===== Login =====
+function loginUser(){
+  let id=document.getElementById('loginID').value.trim();
+  let pass=document.getElementById('loginPass').value;
+  let user=users.find(u=>u.id===id && u.pass===pass);
+  if(user){
+    document.getElementById('loginSection').style.display='none';
+    document.getElementById('appealFormSection').style.display='block';
+    document.getElementById('formMessage').textContent='';
+    localStorage.setItem('currentUser',id);
+  }else{
+    document.getElementById('loginMessage').textContent='❌ Invalid credentials';
+  }
+}
+
+// ===== Appeal Form =====
+document.getElementById('appealForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  let data=Object.fromEntries(new FormData(e.target));
+  data.userID=localStorage.getItem('currentUser');
+  submissions.push(data);
+  localStorage.setItem('submissions',JSON.stringify(submissions));
+  document.getElementById('formMessage').textContent="✅ Appeal submitted!";
+  e.target.reset();
+});
+
+// ===== Logout =====
+function logoutUser(){
+  document.getElementById('appealFormSection').style.display='none';
+  showLogin();
+  localStorage.removeItem('currentUser');
+}
+
+// ===== Admin Panel =====
+function renderAdminPanel(){
+  document.getElementById('registerSection').style.display='none';
+  document.getElementById('loginSection').style.display='none';
+  document.getElementById('appealFormSection').style.display='none';
+  document.getElementById('adminPanel').style.display='block';
+
+  // Users
+  let tbody=document.getElementById('adminUserBody'); tbody.innerHTML='';
+  users.forEach(u=>{
+    let tr=document.createElement('tr');
+    tr.innerHTML=`<td>${u.id}</td><td>${u.pass}</td><td><button onclick="resetPass('${u.id}')">Reset Password</button></td>`;
+    tbody.appendChild(tr);
+  });
+
+  // Submissions
+  let tbody2=document.getElementById('adminSubmissionsBody'); tbody2.innerHTML='';
+  submissions.forEach((s,index)=>{
+    let tr=document.createElement('tr');
+    tr.innerHTML=`<td>${s.userID}</td><td>${s.channelName}</td><td>${s.subscribers}</td><td>${s.email}</td><td>${s.monetization}</td><td><button onclick="deleteSubmission(${index})">Delete</button></td>`;
+    tbody2.appendChild(tr);
+  });
+}
+
+function resetPass(id){
+  let newPass=prompt("Enter new password for "+id);
+  if(newPass){
+    users=users.map(u=>u.id===id?{id:id,pass:newPass}:u);
+    localStorage.setItem('users',JSON.stringify(users));
+    renderAdminPanel();
+    alert("✅ Password reset!");
+  }
+}
+
+function deleteSubmission(index){
+  submissions.splice(index,1);
+  localStorage.setItem('submissions',JSON.stringify(submissions));
+  renderAdminPanel();
+}
+
+// Admin access: visit with ?admin in URL
+if(window.location.search.includes('admin')) renderAdminPanel();
+</script>
+</body>
+</html>
