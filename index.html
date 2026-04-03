@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ytservicebd</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background:#f3f3f3;
+      color:#111;
+    }
+
+    .hero{
+      background:#ff0000;
+      color:#fff;
+      text-align:center;
+      padding:40px 20px 30px;
+    }
+
+    .top-contact{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:14px;
+      line-height:1.5;
+      word-break:break-word;
+    }
+
+    .hero h1{
+      font-size:44px;
+      font-weight:700;
+      letter-spacing:.5px;
+    }
+
+    .wrapper{
+      max-width:760px;
+      margin:22px auto;
+      padding:0 15px 90px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:22px;
+      padding:24px 18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .card h2{
+      text-align:center;
+      font-size:27px;
+      margin-bottom:24px;
+      font-weight:700;
+    }
+
+    .form-group{
+      margin-bottom:16px;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      padding:16px 18px;
+      border:2px solid #ddd;
+      border-radius:14px;
+      font-size:17px;
+      outline:none;
+      background:#fff;
+      transition:0.2s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+      border-color:#ff0000;
+    }
+
+    textarea{
+      min-height:130px;
+      resize:vertical;
+    }
+
+    .submit-btn{
+      width:100%;
+      background:#ff0000;
+      color:#fff;
+      border:none;
+      padding:18px;
+      border-radius:14px;
+      font-size:19px;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.2s ease;
+    }
+
+    .submit-btn:hover{
+      background:#d70000;
+    }
+
+    .submit-btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+    }
+
+    .status{
+      text-align:center;
+      margin-top:16px;
+      font-size:15px;
+      font-weight:600;
+      line-height:1.5;
+    }
+
+    .premium-owner{
+      margin-top:25px;
+      text-align:center;
+      background:linear-gradient(180deg,#ffffff 0%,#fff7f7 100%);
+      border-radius:22px;
+      padding:24px 16px;
+      box-shadow:0 10px 28px rgba(0,0,0,0.08);
+      border:1px solid #ffd6d6;
+    }
+
+    .premium-owner img{
+      width:100px;
+      height:100px;
+      border-radius:50%;
+      object-fit:cover;
+      margin-bottom:12px;
+      border:4px solid #ff0000;
+      box-shadow:0 6px 16px rgba(255,0,0,0.18);
+    }
+
+    .premium-owner h3{
+      font-size:22px;
+      margin-bottom:8px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .owner-subtitle{
+      font-size:14px;
+      color:#666;
+      margin-bottom:16px;
+    }
+
+    .verified-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:#0a84ff;
+      color:#fff;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .owner-links{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .owner-links a{
+      text-decoration:none;
+      background:#ff0000;
+      color:#fff;
+      padding:13px 14px;
+      border-radius:12px;
+      font-weight:700;
+      transition:0.25s ease;
+      box-shadow:0 6px 14px rgba(255,0,0,0.18);
+    }
+
+    .owner-links a:hover{
+      background:#d70000;
+      transform:translateY(-1px);
+    }
+
+    .rules{
+      margin-top:22px;
+      background:#fff7f7;
+      border:1px solid #ffd1d1;
+      border-radius:16px;
+      padding:18px 16px;
+      line-height:1.7;
+    }
+
+    .rules h3{
+      font-size:20px;
+      margin-bottom:10px;
+      color:#c40000;
+    }
+
+    .rules p{
+      font-size:15px;
+      color:#333;
+      margin-bottom:8px;
+    }
+
+    .floating-whatsapp{
+      position:fixed;
+      right:16px;
+      bottom:18px;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      background:#25D366;
+      color:#fff;
+      padding:14px 16px;
+      border-radius:999px;
+      font-weight:700;
+      box-shadow:0 10px 24px rgba(0,0,0,0.18);
+      animation:chatPulse 1.8s infinite;
+    }
+
+    .floating-whatsapp:hover{
+      transform:translateY(-2px);
+    }
+
+    .wa-icon{
+      font-size:20px;
+      line-height:1;
+    }
+
+    .wa-text{
+      font-size:15px;
+      line-height:1;
+    }
+
+    @keyframes chatPulse{
+      0%{
+        transform:scale(1);
+        box-shadow:0 0 0 0 rgba(37,211,102,0.45);
+      }
+      70%{
+        transform:scale(1.03);
+        box-shadow:0 0 0 14px rgba(37,211,102,0);
+      }
+      100%{
+        transform:scale(1);
+        box-shadow:0 0 0 0 rgba(37,211,102,0);
+      }
+    }
+
+    @media (max-width:600px){
+      .top-contact{
+        font-size:16px;
+      }
+
+      .hero h1{
+        font-size:32px;
+      }
+
+      .card{
+        padding:18px 14px;
+      }
+
+      .card h2{
+        font-size:22px;
+      }
+
+      input,
+      select,
+      textarea{
+        font-size:16px;
+        padding:15px 14px;
+      }
+
+      .submit-btn{
+        font-size:17px;
+        padding:16px;
+      }
+
+      .rules h3{
+        font-size:18px;
+      }
+
+      .rules p{
+        font-size:14px;
+      }
+
+      .floating-whatsapp{
+        right:12px;
+        bottom:14px;
+        padding:13px 14px;
+      }
+
+      .wa-text{
+        font-size:14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="top-contact">Tohidul Islam Tarikul WhatsApp 01830090583</div>
+    <h1>ytservicebd</h1>
+  </section>
+
+  <div class="wrapper">
+    <div class="card">
+      <h2>Channel Appeal Form</h2>
+
+      <form id="appealForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="14a5a828-c1fc-4279-ba17-d36f70728d51">
+        <input type="hidden" name="subject" value="New Channel Appeal Submission">
+        <input type="hidden" name="from_name" value="ytservicebd Form">
+
+        <div class="form-group">
+          <input type="text" name="Channel Name" placeholder="Channel Name" required>
+        </div>
+
+        <div class="form-group">
+          <input type="number" name="Subscriber Count" placeholder="Subscriber Count" required>
+        </div>
+
+        <div class="form-group">
+          <select name="YT Studio Appeal Option" required>
+            <option value="">YT Studio Appeal Option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="email" name="Channel Gmail" placeholder="Channel Gmail" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" name="Channel Pin" placeholder="Channel Pin" required>
+        </div>
+
+        <div class="form-group">
+          <select name="Monetization Status" required>
+            <option value="">Monetization Status</option>
+            <option value="Monetized">Monetized</option>
+            <option value="Not Monetized">Not Monetized</option>
+            <option value="Suspended">Suspended</option>
+            <option value="Disabled">Disabled</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="url" name="Facebook Profile Link" placeholder="Facebook Profile Link">
+        </div>
+
+        <div class="form-group">
+          <input type="tel" name="Mobile Number" placeholder="Mobile Number" required>
+        </div>
+
+        <div class="form-group">
+          <textarea name="Channel Details" placeholder="Channel Details" required></textarea>
+        </div>
+
+        <button class="submit-btn" type="submit" id="submitBtn">Submit Appeal Request</button>
+        <div class="status" id="statusMsg"></div>
+      </form>
+
+      <div class="owner premium-owner">
+        <img src="YOUR_PHOTO_URL" alt="Owner Photo">
+
+        <h3>
+          Tohidul Islam Tarikul
+          <span class="verified-badge">✔</span>
+        </h3>
+
+        <p class="owner-subtitle">Official Website Owner</p>
+
+        <div class="owner-links">
+          <a href="https://wa.me/8801830090583" target="_blank">
+            💬 WhatsApp এ যোগাযোগ করুন
+          </a>
+
+          <a href="https://www.facebook.com/YOUR_FB_ID" target="_blank">
+            📘 Facebook Profile
+          </a>
+
+          <a href="https://t.me/YOUR_TELEGRAM_CHANNEL" target="_blank">
+            📢 Telegram Channel
+          </a>
+        </div>
+      </div>
+
+      <div class="rules">
+        <h3>ওয়েবসাইট ব্যবহার বিধি</h3>
+        <p>১. সঠিক এবং সম্পূর্ণ তথ্য প্রদান করুন।</p>
+        <p>২. ভুল Gmail, মোবাইল নাম্বার বা চ্যানেল তথ্য দিলে সেবা দিতে দেরি হতে পারে।</p>
+        <p>৩. শুধুমাত্র নিজের চ্যানেলের তথ্য সাবমিট করুন।</p>
+        <p>৪. অপ্রয়োজনীয় বা ভুয়া তথ্য প্রদান করলে আবেদন বাতিল হতে পারে।</p>
+        <p>৫. ফর্ম সাবমিট করার পর প্রয়োজন হলে WhatsApp নাম্বারে যোগাযোগ করুন।</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/8801830090583" class="floating-whatsapp" target="_blank" aria-label="Chat on WhatsApp">
+    <span class="wa-icon">💬</span>
+    <span class="wa-text">Chat Now</span>
+  </a>
+
+  <script>
+    const form = document.getElementById("appealForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusMsg = document.getElementById("statusMsg");
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+      statusMsg.textContent = "";
+      statusMsg.style.color = "#111";
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          statusMsg.style.color = "green";
+          statusMsg.textContent = "Form submitted successfully.";
+          form.reset();
+        } else {
+          statusMsg.style.color = "red";
+          statusMsg.textContent = result.message || "Submission failed.";
+        }
+      } catch (error) {
+        statusMsg.style.color = "red";
+        statusMsg.textContent = "Error: " + error.message;
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Appeal Request";
+    });
+  </script>
+
+</body>
+</html>
