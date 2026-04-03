@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ytservicebd</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background:#f3f3f3;
+      color:#111;
+    }
+
+    .hero{
+      background:#ff0000;
+      color:#fff;
+      text-align:center;
+      padding:40px 20px 30px;
+    }
+
+    .top-contact{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:14px;
+      line-height:1.5;
+      word-break:break-word;
+    }
+
+    .hero h1{
+      font-size:44px;
+      font-weight:700;
+      letter-spacing:.5px;
+    }
+
+    .wrapper{
+      max-width:760px;
+      margin:22px auto;
+      padding:0 15px 30px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:22px;
+      padding:24px 18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .card h2{
+      text-align:center;
+      font-size:27px;
+      margin-bottom:24px;
+      font-weight:700;
+    }
+
+    .form-group{
+      margin-bottom:16px;
+    }
+
+    input,
+    select,
+    textarea{
+      width:100%;
+      padding:16px 18px;
+      border:2px solid #ddd;
+      border-radius:14px;
+      font-size:17px;
+      outline:none;
+      background:#fff;
+      transition:0.2s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+      border-color:#ff0000;
+    }
+
+    textarea{
+      min-height:130px;
+      resize:vertical;
+    }
+
+    .file-box{
+      border:2px dashed #d0d0d0;
+      border-radius:14px;
+      padding:14px;
+      background:#fafafa;
+    }
+
+    .submit-btn{
+      width:100%;
+      background:#ff0000;
+      color:#fff;
+      border:none;
+      padding:18px;
+      border-radius:14px;
+      font-size:19px;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.2s ease;
+    }
+
+    .submit-btn:hover{
+      background:#d70000;
+    }
+
+    .submit-btn:disabled{
+      opacity:.7;
+      cursor:not-allowed;
+    }
+
+    .status{
+      text-align:center;
+      margin-top:16px;
+      font-size:15px;
+      font-weight:600;
+      line-height:1.5;
+    }
+
+    @media (max-width:600px){
+      .top-contact{
+        font-size:16px;
+      }
+
+      .hero h1{
+        font-size:32px;
+      }
+
+      .card{
+        padding:18px 14px;
+      }
+
+      .card h2{
+        font-size:22px;
+      }
+
+      input,
+      select,
+      textarea{
+        font-size:16px;
+        padding:15px 14px;
+      }
+
+      .submit-btn{
+        font-size:17px;
+        padding:16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="top-contact">Tohidul Islam Tarikul WhatsApp 01830090583</div>
+    <h1>ytservicebd</h1>
+  </section>
+
+  <div class="wrapper">
+    <div class="card">
+      <h2>Channel Appeal Form</h2>
+
+      <form id="appealForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+        
+        <input type="hidden" name="access_key" value="14a5a828-c1fc-4279-ba17-d36f70728d51">
+        <input type="hidden" name="subject" value="New Channel Appeal Submission">
+        <input type="hidden" name="from_name" value="ytservicebd Form">
+
+        <div class="form-group">
+          <input type="text" name="Channel Name" placeholder="Channel Name" required>
+        </div>
+
+        <div class="form-group">
+          <input type="number" name="Subscriber Count" placeholder="Subscriber Count" required>
+        </div>
+
+        <div class="form-group">
+          <select name="YT Studio Appeal Option" required>
+            <option value="">YT Studio Appeal Option</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="email" name="Channel Gmail" placeholder="Channel Gmail" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" name="Channel Pin" placeholder="Channel Pin" required>
+        </div>
+
+        <div class="form-group">
+          <select name="Monetization Status" required>
+            <option value="">Monetization Status</option>
+            <option value="Monetized">Monetized</option>
+            <option value="Not Monetized">Not Monetized</option>
+            <option value="Suspended">Suspended</option>
+            <option value="Disabled">Disabled</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="url" name="Facebook Profile Link" placeholder="Facebook Profile Link">
+        </div>
+
+        <div class="form-group">
+          <input type="tel" name="Mobile Number" placeholder="Mobile Number" required>
+        </div>
+
+        <div class="form-group">
+          <textarea name="Channel Details" placeholder="Channel Details" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <div class="file-box">
+            <input type="file" name="Screenshot" accept="image/*">
+          </div>
+        </div>
+
+        <button class="submit-btn" type="submit" id="submitBtn">Submit Appeal Request</button>
+        <div class="status" id="statusMsg"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("appealForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusMsg = document.getElementById("statusMsg");
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+      statusMsg.textContent = "";
+      statusMsg.style.color = "#111";
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          statusMsg.style.color = "green";
+          statusMsg.textContent = "Form submitted successfully.";
+          form.reset();
+        } else {
+          statusMsg.style.color = "red";
+          statusMsg.textContent = result.message || "Submission failed.";
+        }
+      } catch (error) {
+        statusMsg.style.color = "red";
+        statusMsg.textContent = "Error: " + error.message;
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Appeal Request";
+    });
+  </script>
+
+</body>
+</html>
