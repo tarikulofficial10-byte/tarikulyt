@@ -86,13 +86,6 @@
       resize:vertical;
     }
 
-    .file-box{
-      border:2px dashed #d0d0d0;
-      border-radius:14px;
-      padding:14px;
-      background:#fafafa;
-    }
-
     .submit-btn{
       width:100%;
       background:#ff0000;
@@ -123,6 +116,27 @@
       line-height:1.5;
     }
 
+    .rules{
+      margin-top:22px;
+      background:#fff7f7;
+      border:1px solid #ffd1d1;
+      border-radius:16px;
+      padding:18px 16px;
+      line-height:1.7;
+    }
+
+    .rules h3{
+      font-size:20px;
+      margin-bottom:10px;
+      color:#c40000;
+    }
+
+    .rules p{
+      font-size:15px;
+      color:#333;
+      margin-bottom:8px;
+    }
+
     @media (max-width:600px){
       .top-contact{
         font-size:16px;
@@ -151,6 +165,14 @@
         font-size:17px;
         padding:16px;
       }
+
+      .rules h3{
+        font-size:18px;
+      }
+
+      .rules p{
+        font-size:14px;
+      }
     }
   </style>
 </head>
@@ -165,7 +187,7 @@
     <div class="card">
       <h2>Channel Appeal Form</h2>
 
-      <form id="appealForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+      <form id="appealForm" action="https://api.web3forms.com/submit" method="POST">
         
         <input type="hidden" name="access_key" value="14a5a828-c1fc-4279-ba17-d36f70728d51">
         <input type="hidden" name="subject" value="New Channel Appeal Submission">
@@ -217,15 +239,18 @@
           <textarea name="Channel Details" placeholder="Channel Details" required></textarea>
         </div>
 
-        <div class="form-group">
-          <div class="file-box">
-            <input type="file" name="Screenshot" accept="image/*">
-          </div>
-        </div>
-
         <button class="submit-btn" type="submit" id="submitBtn">Submit Appeal Request</button>
         <div class="status" id="statusMsg"></div>
       </form>
+
+      <div class="rules">
+        <h3>ওয়েবসাইট ব্যবহার বিধি</h3>
+        <p>১. সঠিক এবং সম্পূর্ণ তথ্য প্রদান করুন।</p>
+        <p>২. ভুল Gmail, মোবাইল নাম্বার বা চ্যানেল তথ্য দিলে সেবা দিতে দেরি হতে পারে।</p>
+        <p>৩. শুধুমাত্র নিজের চ্যানেলের তথ্য সাবমিট করুন।</p>
+        <p>৪. অপ্রয়োজনীয় বা ভুয়া তথ্য প্রদান করলে আবেদন বাতিল হতে পারে।</p>
+        <p>৫. ফর্ম সাবমিট করার পর প্রয়োজন হলে WhatsApp নাম্বারে যোগাযোগ করুন।</p>
+      </div>
     </div>
   </div>
 
